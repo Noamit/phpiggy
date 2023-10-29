@@ -1,0 +1,117 @@
+
+// $user_cols = [
+//     'id' => 'INT(11) PRIMARY KEY',
+//     'name' => 'VARCHAR(255)',
+//     'email' => 'VARCHAR(255)',
+//     'active' => 'tinyint(1) DEFAULT 1'
+// ];
+
+// $post_cols = [
+//     'user_id' => 'INT(11) REFERENCES users(id)',
+//     'id' => 'INT(11) PRIMARY KEY',
+//     'title' => 'TEXT',
+//     'body' => 'TEXT',
+//     'creation_date' => 'DATE',
+//     'active' => 'tinyint(1) DEFAULT 1'
+// ];
+
+// $db->create_table('users', $user_cols);
+// $db->create_table('posts', $post_cols);
+
+// $jsonPlaceholderUrl = 'https://jsonplaceholder.typicode.com/users';
+
+// $ch = curl_init($jsonPlaceholderUrl);
+
+// // Set cURL options for the request.
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// $response = curl_exec($ch);
+
+// if ($response === false) {
+//     die('cURL Error: ' . curl_error($ch));
+// }
+
+// curl_close($ch);
+
+// // Decode the JSON response to a PHP array.
+// $data = json_decode($response, true);
+
+// if (!$data) {
+//     die('Error decoding JSON data.');
+// } else {
+//     foreach ($data as $user) {
+//         $id = $user['id'];
+//         $name = $user['name'];
+//         $email = $user['email'];
+//         $active = 1; // Assuming all users are initially active.
+
+//         // Insert the user data into the 'users' table.
+//         $insertData = [
+//             'id' => $id,
+//             'name' => $name,
+//             'email' => $email,
+//             'active' => $active,
+//         ];
+
+//         $db->insert('users', $insertData);
+//     }
+// }
+
+
+// $jsonPlaceholderUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+// $ch = curl_init($jsonPlaceholderUrl);
+
+// // Set cURL options for the request.
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// $response = curl_exec($ch);
+
+// if ($response === false) {
+//     die('cURL Error: ' . curl_error($ch));
+// }
+
+// curl_close($ch);
+
+// // Decode the JSON response to a PHP array.
+// $data = json_decode($response, true);
+
+// if (!$data) {
+//     die('Error decoding JSON data.');
+// } else {
+//     foreach ($data as $post) {
+//         $user_id = $post['userId'];
+//         $id = $post['id'];
+//         $title = $post['title'];
+//         $body = $post['body'];
+//         $active = 1; // Assuming all posts are initially active.
+//         $creation_date = date("Y-m-d");
+//         // Insert the user data into the 'users' table.
+//         $insertData = [
+//             'id' => $id,
+//             'user_id' => $user_id,
+//             'title' => $title,
+//             'body' => $body,
+//             'active' => $active,
+//             'creation_date' => $creation_date
+//         ];
+
+//         $db->insert('posts', $insertData);
+//     }
+// }
+
+// // Remote image URL
+// $imageURL = 'https://cdn2.vectorstock.com/i/1000x1000/23/81/default-avatar-profile-icon-vector-18942381.jpg';
+// $imageData = file_get_contents($imageURL);
+// // Image path
+// $savePath = 'images/image.jpg';
+
+// // Save image 
+// if (file_put_contents($savePath, $imageData)) {
+//     echo "Image saved successfully.";
+// } else {
+//     $error = error_get_last();
+//     echo "Error saving the image." . $error['message'];
+// }
+
+// Closing connection 
