@@ -6,6 +6,7 @@
     "autoload": {
         "psr-4": {
         "Framework\\": "src/Framework", 
+        "Framework\\Exceptions\\": "src/Framework/Exceptions",
         "App\\": "src/App/"
         },
         "files": [

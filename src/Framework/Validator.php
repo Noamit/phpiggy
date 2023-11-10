@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 namespace Framework;
+
 use Framework\Contracts\RuleInterface;
+use Framework\Exceptions\ValidationException;
+
 class Validator
 {
     private array $rules = [];
@@ -29,6 +32,7 @@ class Validator
             }
         }
         if(count($errors)) {
+            // throw new ValidationException();
             dd($errors);
         }
     }
