@@ -6,6 +6,7 @@ namespace Framework;
 
 class TemplateEngine
 {
+    private array $globalTemplateData = [];
     public function __construct(private string $basePath)
     {
     }
@@ -13,6 +14,7 @@ class TemplateEngine
     {
         // EXTR_SKIP for not overwrite an existing variable
         extract($data, EXTR_SKIP);
+        extract($this->globalTemplateData, EXTR_SKIP);
 
         //buffering 
         ob_start();
@@ -25,5 +27,9 @@ class TemplateEngine
     public function resolve(string $path)
     {
         return "{$this->basePath}/{$path}";
+    }
+    public function addGlobal(string $key, mixed $value)
+    {
+    $this->globalTemplateData[$key] = $value;
     }
 }
