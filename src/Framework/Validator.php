@@ -32,9 +32,7 @@ class Validator
             }
         }
         if(count($errors)) {
-            // throw new \Exception("Some error message");
-            throw new ValidationException();
-            // dd($errors);
+            throw new ValidationException($errors);
         }
     }
 }
