@@ -5,25 +5,25 @@
         <!-- Email -->
         <label class="block">
             <span class="text-gray-700">Email address</span>
-            <input type="email" name="email"
+            <input type="email" name="email" value="<?php echo $oldFormData['email'] ?? ''; ?>"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="john@example.com" />
             <?php if(array_key_exists('email', $errors)) :?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                    <?php echo $errors['email'][0]; ?>
-                </div>
+            <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <?php echo $errors['email'][0]; ?>
+            </div>
             <?php endif;?>
         </label>
         <!-- Age -->
         <label class="block">
             <span class="text-gray-700">Age</span>
-            <input type="number" name="age"
+            <input type="number" name="age" value="<?php echo $oldFormData['age'] ?? ''; ?>"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="" />
-                <?php if(array_key_exists('age', $errors)) :?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                    <?php echo $errors['age'][0]; ?>
-                </div>
+            <?php if(array_key_exists('age', $errors)) :?>
+            <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <?php echo $errors['age'][0]; ?>
+            </div>
             <?php endif;?>
         </label>
         <!-- Country -->
@@ -32,26 +32,28 @@
             <select name="country"
                 class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 <option value="USA">USA</option>
-                <option value="Canada">Canada</option>
-                <option value="Mexico">Mexico</option>
+                <option value="Canada" <?php echo ($oldFormData['country'] ?? '') == "Canada" ? "selected" : ""; ?>>
+                    Canada</option>
+                <option value="Mexico" <?php echo ($oldFormData['country'] ?? '') == "Mexico" ? "selected" : ""; ?>>
+                    Mexico</option>
                 <option value="Invalid">Invalid Country</option>
             </select>
             <?php if(array_key_exists('country', $errors)) :?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                    <?php echo $errors['country'][0]; ?>
-                </div>
+            <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <?php echo $errors['country'][0]; ?>
+            </div>
             <?php endif;?>
         </label>
         <!-- Social Media URL -->
         <label class="block">
             <span class="text-gray-700">Social Media URL</span>
-            <input type="text" name="socialMediaURL"
+            <input type="text" name="socialMediaURL" value="<?php echo $oldFormData['socialMediaURL'] ?? ''; ?>"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="" />
-                <?php if(array_key_exists('socialMediaURL', $errors)) :?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                    <?php echo $errors['socialMediaURL'][0]; ?>
-                </div>
+            <?php if(array_key_exists('socialMediaURL', $errors)) :?>
+            <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <?php echo $errors['socialMediaURL'][0]; ?>
+            </div>
             <?php endif;?>
         </label>
         <!-- Password -->
@@ -60,10 +62,10 @@
             <input type="password" name="password"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="" />
-                <?php if(array_key_exists('password', $errors)) :?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                    <?php echo $errors['password'][0]; ?>
-                </div>
+            <?php if(array_key_exists('password', $errors)) :?>
+            <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <?php echo $errors['password'][0]; ?>
+            </div>
             <?php endif;?>
         </label>
         <!-- Confirm Password -->
@@ -72,10 +74,10 @@
             <input type="password" name="confirmPassword"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="" />
-                <?php if(array_key_exists('confirmPassword', $errors)) :?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                    <?php echo $errors['confirmPassword'][0]; ?>
-                </div>
+            <?php if(array_key_exists('confirmPassword', $errors)) :?>
+            <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <?php echo $errors['confirmPassword'][0]; ?>
+            </div>
             <?php endif;?>
         </label>
         <!-- Terms of Service -->
@@ -83,14 +85,14 @@
             <div class="mt-2">
                 <div>
                     <label class="inline-flex items-center">
-                        <input name="tos"
+                        <input name="tos" <?php echo $oldFormData['tos'] ?? false ? "checked" : ""; ?>
                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                             type="checkbox" />
-                            <?php if(array_key_exists('tos', $errors)) :?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                    <?php echo $errors['tos'][0]; ?>
-                </div>
-            <?php endif;?>
+                        <?php if(array_key_exists('tos', $errors)) :?>
+                        <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                            <?php echo $errors['tos'][0]; ?>
+                        </div>
+                        <?php endif;?>
                         <span class="ml-2">I accept the terms of service.</span>
                     </label>
                 </div>
