@@ -26,7 +26,8 @@ class SessionMiddleware implements MiddlewareInterface
             "Headers already sent. Consider enabling output buffering. Data outputted from {$filename} - Line: {$line}"
             );
         }
-        session_save_path("/Applications/XAMPP/xamppfiles/temp/");
+        
+        // session_save_path("/Applications/XAMPP/xamppfiles/temp/");
         session_start();
 
         $next();
