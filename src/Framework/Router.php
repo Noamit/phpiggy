@@ -16,6 +16,7 @@ class Router
             'path' => $path,
             'method' => strtoupper($method),
             'controller' => $controller,
+            'middlewares' => []
         ];
     }
 
@@ -42,10 +43,15 @@ class Router
 
             $action = fn () => $controllerInstance->$func(); 
 
-            foreach ($this->middlewares as $middleware) {
+            //...$this->middlewares is last , the oder is matter. global middleware run first
+            $allMiddleware = [...$route['middlewares'], ...$this->middlewares];
+
+            //before $allMiddleware , the loop was only on $this->middlewares. but we added a private middlewares
+            foreach ($allMiddleware as $middleware) {
                 $middlewareInstance = $container ? $container->resolve($middleware) : new $middleware;
                 $action = fn () => $middlewareInstance->process($action);
             }
+
             $action();
             // $controllerInstance->{$func}();
             return;
@@ -55,5 +61,11 @@ class Router
     public function addMiddleware(string $middleware)
     {
         $this->middlewares[] = $middleware;
+    }
+
+    public function addRouteMiddleware(string $middleware)
+    {
+        $lastRouteKey = array_key_last($this->routes);
+        $this->routes[$lastRouteKey]['middlewares'][] = $middleware;
     }
 }
