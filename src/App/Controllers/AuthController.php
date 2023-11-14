@@ -26,4 +26,19 @@ class AuthController
         $this->userService->create($_POST);
         redirectTo('/');
     }
+
+    public function loginView()
+    {
+        echo $this->view->render("login.php", [
+            'title' => 'Login Page'
+        ]);
+    }
+    public function login()
+    {
+        $this->validatorService->validateLogin($_POST);
+        // //if validation will success -> check if email is taken
+        // $this->userService->isEmailTaken($_POST['email']);
+        // $this->userService->create($_POST);
+        // redirectTo('/');
+    }
 }
