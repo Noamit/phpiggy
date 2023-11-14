@@ -16,7 +16,6 @@ class SessionMiddleware implements MiddlewareInterface
             throw new SessionException("Session already active. ");
         }
 
-
         //headers_sent , without session
         // if this 2 lines is before the conditions, it is error and will catch the error :
         // ob_end_clean();
@@ -27,6 +26,12 @@ class SessionMiddleware implements MiddlewareInterface
             );
         }
         
+        session_set_cookie_params([
+            'secure' => $_ENV['APP_ENV'] === "production",
+            'httponly' => true,
+            'samesite' => 'lax'
+           ]);
+
         // session_save_path("/Applications/XAMPP/xamppfiles/temp/");
         session_start();
 

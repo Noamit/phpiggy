@@ -48,6 +48,7 @@ class UserService {
             throw new ValidationException(['password' => [ 'Invalid email or password.']]);
         }
 
+        session_regenerate_id();
         $_SESSION['user'] = $user['id'];
     }
 }
