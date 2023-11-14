@@ -37,8 +37,7 @@ class AuthController
     {
         $this->validatorService->validateLogin($_POST);
         // //if validation will success -> check if email is taken
-        // $this->userService->isEmailTaken($_POST['email']);
-        // $this->userService->create($_POST);
-        // redirectTo('/');
+        $this->userService->login($_POST);
+        redirectTo('/');
     }
 }

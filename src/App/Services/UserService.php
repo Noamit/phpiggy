@@ -34,4 +34,20 @@ class UserService {
 
         $this->db->query($sql, $data);
     }
+
+    public function login(array $formData) {
+        $user = $this->db->query("SELECT * FROM users WHERE email=:email", ['email'=>$formData['email']])->find();
+
+        //$user['password'] ?? '' - it is for the case that $user is false beacuse there is no user and the fetch method return false
+        $passwordsMatch = password_verify(
+            $formData['password'],
+            $user['password'] ?? ''
+        );
+
+        if(!$user || !$passwordsMatch) {
+            throw new ValidationException(['password' => [ 'Invalid email or password.']]);
+        }
+
+        $_SESSION['user'] = $user['id'];
+    }
 }
