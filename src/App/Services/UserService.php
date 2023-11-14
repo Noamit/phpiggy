@@ -33,6 +33,8 @@ class UserService {
         ];
 
         $this->db->query($sql, $data);
+        session_regenerate_id();
+        $_SESSION['user'] = $this->db->id();
     }
 
     public function login(array $formData) {
