@@ -13,6 +13,11 @@ $config = [
 $username = 'root';
 $password = '';
 $db = new Database($driver, $config, $username, $password);
+// $db = new Database('mysql', [
+//     'host' => '127.0.0.1',
+//     'port' => 8080,
+//     'dbname' => 'phpiggy',
+// ], 'root','');
 
 $sqlFile = file_get_contents("./database.sql");
 $db->query($sqlFile);
