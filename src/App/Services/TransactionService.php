@@ -26,20 +26,30 @@ class TransactionService {
         $this->db->query($sql, $data);
     }
 
-    public function getUserTransactions() {
+    public function getUserTransactions(int $length, int $offset) {
 
         //%_ the caracters wh want to escape
         $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
         
         $sql = "SELECT *, DATE_FORMAT(date, '%Y-%m-%d') AS formatted_date FROM transactions
                 WHERE user_id = :user_id 
-                AND description LIKE :description";
+                AND description LIKE :description
+                LIMIT {$length} OFFSET {$offset}";
                 
-        $data = [
+        $params = [
             'user_id' => $_SESSION['user'],
             'description' => "%{$searchTerm}%"
         ];
-        $transactions = $this->db->query($sql, $data)->findAll();
-        return $transactions;
+
+        $transactions = $this->db->query($sql, $params)->findAll();
+        
+        $sql = "SELECT COUNT(*)
+                FROM transactions
+                WHERE user_id = :user_id
+                AND description LIKE :description";
+
+        $transactionCount = $this->db->query($sql, $params)->count();
+
+        return [$transactions, $transactionCount];
     }
 }
