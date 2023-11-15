@@ -26,6 +26,24 @@ class TransactionService {
         $this->db->query($sql, $data);
     }
 
+    public function update(array $formData, int $id) {
+
+        $formattedDate = "{$formData['date']} 00:00:00";
+        $sql = "UPDATE transactions
+                SET description = :description , amount = :amount, date = :date
+                WHERE id = :id
+                AND user_id = :user_id";
+        $data = [
+            'description' => $formData['description'],
+            'amount' => $formData['amount'],
+            'date' => $formattedDate,
+            'id' => $id,
+            'user_id' => $_SESSION['user']
+        ];
+
+        $this->db->query($sql, $data);
+    }
+
     public function getUserTransactions(int $length, int $offset) {
 
         //%_ the caracters wh want to escape
@@ -51,5 +69,18 @@ class TransactionService {
         $transactionCount = $this->db->query($sql, $params)->count();
 
         return [$transactions, $transactionCount];
+    }
+
+    public function getUserTransaction (string $id) {
+        $sql = "SELECT *, DATE_FORMAT(date, '%Y-%m-%d') AS formatted_date FROM transactions
+                WHERE user_id = :user_id 
+                AND id = :id";
+                
+        $params = [
+            'user_id' => $_SESSION['user'],
+            'id' => $id
+        ];
+        
+        return $this->db->query($sql, $params)->find();
     }
 }

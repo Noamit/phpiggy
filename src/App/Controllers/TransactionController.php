@@ -27,6 +27,24 @@ class TransactionController
 
   public function editView(array $params)
   {
-    dd($params);
+    //$param['transaction'] == the id of the transaction.
+    //$param['transaction'] = 3 in this example : http://phpiggy.local/transaction/3 
+    $transaction = $this->transactionService->getUserTransaction($params['transaction']);
+    if (!$transaction) {
+        redirectTo('/');
+    }
+    echo $this->view->render("transactions/edit.php", ['transaction' => $transaction]); 
+  }
+
+
+  public function edit(array $params) {
+    $transaction = $this->transactionService->getUserTransaction($params['transaction']);
+    if (!$transaction) {
+        redirectTo('/');
+    }
+    
+    $this->validatorService->validateTransaction($_POST);
+    $this->transactionService->update($_POST, $transaction['id']);
+    redirectTo($_SERVER['HTTP_REFERER']);
   }
 }
