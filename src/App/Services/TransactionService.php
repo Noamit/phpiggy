@@ -25,4 +25,13 @@ class TransactionService {
 
         $this->db->query($sql, $data);
     }
+
+    public function getUserTransactions() {
+        $sql = "SELECT * FROM transactions WHERE user_id = :user_id";
+        $data = [
+            'user_id' => $_SESSION['user']
+        ];
+        $transactions = $this->db->query($sql, $data)->findAll();
+        return $transactions;
+    }
 }
