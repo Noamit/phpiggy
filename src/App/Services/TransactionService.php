@@ -44,6 +44,19 @@ class TransactionService {
         $this->db->query($sql, $data);
     }
 
+    public function delete(int $id) {
+
+        $sql = "DELETE FROM transactions
+                WHERE id = :id
+                AND user_id = :user_id";
+        $data = [
+            'id' => $id,
+            'user_id' => $_SESSION['user']
+        ];
+
+        $this->db->query($sql, $data);
+    }
+
     public function getUserTransactions(int $length, int $offset) {
 
         //%_ the caracters wh want to escape
