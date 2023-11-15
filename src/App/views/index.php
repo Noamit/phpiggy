@@ -19,7 +19,7 @@
     <!-- Search Form -->
     <form method="GET" class="mt-4 w-full">
         <div class="flex">
-            <input name="s" type="text"
+            <input name="s" type="text" value="<?php echo (string)$searchTerm;?>"
                 class="w-full rounded-l-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="Enter search term" />
             <button type="submit"
@@ -115,7 +115,7 @@
     <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0 mt-6">
         <!-- Previous Page Link -->
         <div class="-mt-px flex w-0 flex-1">
-            <?php if($current_page > 1) : ?>
+            <?php if($currentPage > 1) : ?>
             <a href="/?<?php echo $previousPageQuery;?>"
                 class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                 <svg class="mr-3 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -130,14 +130,17 @@
         </div>
         <!-- Pages Link -->
         <div class="hidden md:-mt-px md:flex">
-            <a href="/" class="inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium">
-                <?php echo $current_page?>
+            <?php foreach($pageLinks as $pageNum=>$query) : ?>
+            <a href="/?<?php echo $query;?>"
+                class="<?php echo $pageNum + 1 === $currentPage ? "border-indigo-500 text-indigo-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"?> inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium">
+                <?php echo $pageNum + 1; ?>
             </a>
+            <?php endforeach; ?>
             <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
         </div>
         <!-- Next Page Link -->
         <div class="-mt-px flex w-0 flex-1 justify-end">
-            <?php if($current_page < $last_page) : ?>
+            <?php if($currentPage < $lastPage) : ?>
             <a href="/?<?php echo $nextPageQuery;?>"
                 class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                 Next
