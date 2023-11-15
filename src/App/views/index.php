@@ -78,7 +78,7 @@
                     </div>
                 </td>
                 <!-- Date -->
-                <td class="p-4 text-sm text-gray-600"><?php echo $transaction['date'];?></td>
+                <td class="p-4 text-sm text-gray-600"><?php echo $transaction['formatted_date'];?></td>
                 <!-- Actions -->
                 <td class="p-4 text-sm text-gray-600 flex justify-center space-x-2">
                     <a href="#"
