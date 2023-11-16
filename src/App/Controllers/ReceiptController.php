@@ -64,6 +64,8 @@ class ReceiptController
     if($receipt['transaction_id'] !== $transaction['id']) {
       redirectTo("/");
     }
+
+    $this->receiptService->read($receipt);
     
   }
 

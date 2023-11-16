@@ -72,4 +72,17 @@ class ReceiptService {
         return $receipt;
     }
 
+    public function read(array $receipt) {
+        $filePath = Paths::STORAGE_UPLOADS . "/" . $receipt['storage_filename'];
+
+        if(!file_exists($filePath)) {
+            redirectTo("/");
+        }
+
+        // tell the browser the file beacuse it is not html
+        header("Content-Disposition: inline; filename={$receipt['original_filename']}");
+        header("Content-Type: {$receipt['media_type']}");
+        readfile($filePath);
+    }
+
 }
