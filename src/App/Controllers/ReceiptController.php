@@ -71,6 +71,27 @@ class ReceiptController
 
   public function delete(array $params) {
 
+    $transaction = $this->transactionService->getUserTransaction($params['transaction']);
+
+    //check if transaction exists
+    if(empty($transaction)) {
+      redirectTo("/");
+    }
+
+    $receipt = $this->receiptService->getReceipt($params['receipt']);
+
+    //check if receipt exists
+    if(empty($receipt)) {
+      redirectTo("/");
+    }
+
+    // the receipt isnt for this transaction
+    if($receipt['transaction_id'] !== $transaction['id']) {
+      redirectTo("/");
+    }
+
+    $this->receiptService->delete($receipt);
+    redirectTo("/");
   }
 
 }
