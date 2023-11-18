@@ -22,8 +22,9 @@ class TransactionService {
             'amount' => $formData['amount'],
             'date' => $formattedDate
         ];
-
+        
         $this->db->query($sql, $data);
+
     }
 
     public function update(array $formData, int $id) {
@@ -104,4 +105,9 @@ class TransactionService {
         
         return $this->db->query($sql, $params)->find();
     }
+
+    public function lastId() {
+        return $this->db->id();
+    }
+
 }

@@ -52,6 +52,12 @@ class ValidatorService
             'date' => ['required', 'dateFormat:Y-m-d']
         ]);
     }
+
+    public function validateCategory(array $formData) {
+        $this->validator->validate($formData, [
+            'category_name' => ['required', 'lengthMax:255']
+        ]);
+    }
     
 
 }

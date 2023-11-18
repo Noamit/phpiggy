@@ -5,23 +5,38 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Framework\TemplateEngine;
-use App\Services\{ValidatorService,TransactionService};
+use App\Services\{ValidatorService,TransactionService, CategoryService};
 
 class TransactionController
 {
   public function __construct(
-    private TemplateEngine $view, private ValidatorService $validatorService, private TransactionService $transactionService
+    private TemplateEngine $view, private ValidatorService $validatorService, private TransactionService $transactionService, private CategoryService $categoryService
   ) {
   }
 
   public function createView()
   {
-    echo $this->view->render("transactions/create.php");
+    $categories =  $this->categoryService->getCategories();
+    echo $this->view->render("transactions/create.php", ['categories' => $categories]);
   }
 
   public function create() {
     $this->validatorService->validateTransaction($_POST);
     $this->transactionService->create($_POST);
+
+    $excludedFields = ['description', 'amount', 'date'];
+    //array of categories
+    $filteredFormData = array_diff_key($_POST, array_flip($excludedFields));
+    $last_id = $this->transactionService->lastId();
+
+    foreach($filteredFormData as $category_name=>$val) {
+      $category = $this->categoryService->getCategory($category_name);
+      // check if category exists and add transaction to category if category exists
+      if ($category) {
+        $this->categoryService->addTransactionToCategory($category_name, $last_id);
+      }
+    }
+    
     redirectTo('/');
   }
 

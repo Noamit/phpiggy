@@ -33,3 +33,18 @@ CREATE TABLE IF NOT EXISTS receipts (
   PRIMARY KEY (id),
   FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE IF NOT EXISTS categories (
+  category_name varchar(255) NOT NULL,
+  PRIMARY KEY (category_name)
+);
+
+CREATE TABLE IF NOT EXISTS transactions_categories (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  transaction_id bigint(20) UNSIGNED NOT NULL,
+  category_name varchar(255) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (transaction_id) REFERENCES transactions(id),
+  FOREIGN KEY (category_name) REFERENCES categories(category_name)
+);

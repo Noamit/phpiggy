@@ -34,6 +34,20 @@
             </div>
             <?php endif; ?>
         </label>
+        <!-- Caterories -->
+        <label class="block">
+            <span class="text-gray-700">Categories</span>
+            <?php foreach($categories as $category): ?>
+            <div class="form-check">
+                <input class="form-check-input" name="<?php echo $category['category_name']?>" type="checkbox"
+                    <?php echo (isset($_POST[$category['category_name']])?"value='y'":"value='n'")?>
+                    <?php echo (isset($_POST[$category['category_name']])?"checked":"") ?> id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    <?php echo $category['category_name']?>
+                </label>
+            </div>
+            <?php endforeach;?>
+        </label>
         <button type="submit" class="block w-full py-2 bg-indigo-600 text-white rounded">
             Submit
         </button>

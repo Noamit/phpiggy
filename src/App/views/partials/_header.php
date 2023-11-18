@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/assets/main.css" />
+
 </head>
 
 <body class="bg-indigo-50 font-['Outfit']">
@@ -33,6 +34,7 @@
                 <a href="/login" class="text-gray-300 hover:text-white transition">Login</a>
                 <a href="/register" class="text-gray-300 hover:text-white transition">Register</a>
                 <?php endif; ?>
+                <div><?php echo $_POST['first']?></div>
             </div>
         </nav>
     </header>
