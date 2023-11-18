@@ -45,6 +45,6 @@ CREATE TABLE IF NOT EXISTS transactions_categories (
   transaction_id bigint(20) UNSIGNED NOT NULL,
   category_name varchar(255) NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (transaction_id) REFERENCES transactions(id),
-  FOREIGN KEY (category_name) REFERENCES categories(category_name)
+  FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE,
+  FOREIGN KEY (category_name) REFERENCES categories(category_name) ON DELETE CASCADE
 );
