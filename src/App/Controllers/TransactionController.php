@@ -87,13 +87,10 @@ class TransactionController
       return $category['category_name'];
     }, $prev);
 
-    // 1 2 6
     $transaction_categories = array_diff_key($_POST, array_flip($excludedFields));
 
-    // 6
     $new_categories = array_diff_key($transaction_categories, array_flip($prev));
 
-    // 3 4 5
     $delete_categories = array_diff_key(array_flip($prev), $transaction_categories);
 
     foreach($new_categories as $category_name=>$val) {
