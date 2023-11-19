@@ -31,6 +31,8 @@ class HomeController
         
         $lastPage = ceil($count / $length);
 
+        $categoryTerm = $_GET['c'] ?? null;
+        
         //create an array of 1,2,... lastPage
         $pages = $lastPage ? range(1, $lastPage) : [];
         $pageLinks = array_map(
@@ -52,7 +54,8 @@ class HomeController
                 's' => $searchTerm
             ]),
             'pageLinks' => $pageLinks,
-            'searchTerm' => $searchTerm
+            'searchTerm' => $searchTerm,
+            'category_term' => $categoryTerm
         ]);
     }
 }
