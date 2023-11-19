@@ -24,10 +24,20 @@
 
                 New Category
             </a>
+            <a href="/category"
+        class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-funnel"
+                viewBox="0 0 16 16">
+                <path troke-linecap="round" stroke-linejoin="round"
+                    d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
+            </svg>
+            Advanced Search
+    </a>
         </div>
     </div>
+
     <!-- Search Form -->
-    <form method="GET" class="mt-4 w-full">
+    <form method="GET" class="w-full">
         <div class="flex">
             <input name="s" type="text" value="<?php echo (string)$searchTerm;?>"
                 class="w-full rounded-l-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -38,16 +48,7 @@
             </button>
         </div>
     </form>
-    <!-- <a>
-        <button
-            class="rounded-r-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel"
-                viewBox="0 0 16 16">
-                <path
-                    d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
-            </svg>
-        </button>
-    </a> -->
+
     <!-- Transaction List -->
     <table class="table-auto min-w-full divide-y divide-gray-300 mt-6">
         <thead class="bg-gray-50">
@@ -59,10 +60,13 @@
                     Amount
                 </th>
                 <th class="p-4 text-left text-sm font-semibold text-gray-900">
-                    Receipt(s)
+                    Categories 
                 </th>
                 <th class="p-4 text-left text-sm font-semibold text-gray-900">
                     Date
+                </th>
+                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                    Receipt(s)
                 </th>
                 <th>Actions</th>
             </tr>
@@ -76,6 +80,16 @@
                 <!-- Amount -->
                 <td class="p-4 text-sm text-gray-600"><?php echo $transaction['amount'];?></td>
                 <!-- Receipt List -->
+                <td class="p-4 text-sm text-gray-600">
+                    <?php foreach($transaction['categories'] as $category):?>
+                    <div class="inline-block relative cursor-pointer">
+                        <?php echo $category['category_name'];?>
+                    </div>
+                    <br>
+                    <?php endforeach;?>
+                </td>
+                <!-- Date -->
+                <td class="p-4 text-sm text-gray-600"><?php echo $transaction['formatted_date'];?></td>
                 <td class="p-4 text-sm text-gray-600">
                     <?php foreach($transaction['receipts'] as $receipt):?>
                     <div class="inline-block relative cursor-pointer">
@@ -102,8 +116,6 @@
                     </div>
                     <?php endforeach;?>
                 </td>
-                <!-- Date -->
-                <td class="p-4 text-sm text-gray-600"><?php echo $transaction['formatted_date'];?></td>
                 <!-- Actions -->
                 <td class="p-4 text-sm text-gray-600 flex justify-center space-x-2">
                     <a href="/transaction/<?php echo $transaction['id'];?>/receipt"

@@ -27,7 +27,7 @@ class HomeController
 
         [$transactions, $count] = $this->transactionService->getUserTransactions(
             $length, $offset
-        );
+        );        
         
         $lastPage = ceil($count / $length);
 

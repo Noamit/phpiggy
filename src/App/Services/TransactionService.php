@@ -83,6 +83,15 @@ class TransactionService {
             return $transaction;
         } , $transactions);
         
+        $transactions = array_map(function(array $transaction) {
+            $sql = "SELECT * FROM transactions_categories WHERE transaction_id = :transaction_id";
+            $data = ['transaction_id' => $transaction['id']];
+            
+            $transaction['categories'] = $this->db->query($sql, $data)->findAll();
+            return $transaction;
+        } , $transactions);
+
+
         $sql = "SELECT COUNT(*)
                 FROM transactions
                 WHERE user_id = :user_id
