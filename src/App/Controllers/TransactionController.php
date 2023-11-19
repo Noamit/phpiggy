@@ -48,7 +48,24 @@ class TransactionController
     if (!$transaction) {
         redirectTo('/');
     }
-    echo $this->view->render("transactions/edit.php", ['transaction' => $transaction]); 
+
+    $all_categories = $this->categoryService->getCategories();
+
+    $all_categories = array_map(function(array $category) {
+      return $category['category_name'];
+    }, $all_categories);
+
+    $transaction_categories = $this->categoryService->getTransactionCategories($params['transaction']);
+    $transaction_categories = array_map(function(array $category) {
+      return $category['category_name'];
+    }, $transaction_categories);
+
+    $not_transaction_categories = array_diff($all_categories, $transaction_categories);
+
+    echo $this->view->render("transactions/edit.php",
+    ['transaction' => $transaction,
+     'transaction_categories' => $transaction_categories,
+      'not_transaction_categories' => $not_transaction_categories]); 
   }
 
 
@@ -60,6 +77,41 @@ class TransactionController
     
     $this->validatorService->validateTransaction($_POST);
     $this->transactionService->update($_POST, $transaction['id']);
+
+    // need to update the transactions_categories table
+    $excludedFields = ['description', 'amount', 'date'];
+
+    //array of category names
+    $prev = $this->categoryService->getTransactionCategories($params['transaction']);
+    $prev = array_map(function(array $category) {
+      return $category['category_name'];
+    }, $prev);
+
+    // 1 2 6
+    $transaction_categories = array_diff_key($_POST, array_flip($excludedFields));
+
+    // 6
+    $new_categories = array_diff_key($transaction_categories, array_flip($prev));
+
+    // 3 4 5
+    $delete_categories = array_diff_key(array_flip($prev), $transaction_categories);
+
+    foreach($new_categories as $category_name=>$val) {
+      $category = $this->categoryService->getCategory($category_name);
+      // check if category exists and add transaction to category if category exists
+      if ($category) {
+        $this->categoryService->addTransactionToCategory($category_name, $params['transaction']);
+      }
+    }
+
+    foreach($delete_categories as $category_name=>$val) {
+      $category = $this->categoryService->getCategory($category_name);
+      // check if category exists and add transaction to category if category exists
+      if ($category) {
+        $this->categoryService->deleteTransactionFromCategory($category_name, $params['transaction']);
+      }
+    }
+
     redirectTo($_SERVER['HTTP_REFERER']);
   }
 

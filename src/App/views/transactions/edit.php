@@ -3,7 +3,6 @@
 <section class="max-w-2xl mx-auto mt-12 p-4 bg-white shadow-md border border-gray-200 rounded">
     <form method="POST" class="grid grid-cols-1 gap-6">
         <?php include $this->resolve("partials/_csrf.php"); ?>
-
         <label class="block">
             <span class="text-gray-700">Description</span>
             <input name="description" type="text" value="<?php echo $transaction['description']; ?>"
@@ -34,6 +33,30 @@
                 <?php echo $errors['date'][0]; ?>
             </div>
             <?php endif; ?>
+        </label>
+        <!-- Categories -->
+        <label class="block">
+            <span class="text-gray-700">Categories</span>
+            <?php foreach($transaction_categories as $key=>$category): ?>
+            <div class="form-check">
+                <input class="form-check-input" name="<?php echo $category?>" type="checkbox"
+                    <?php echo (isset($_POST[$category])?"value='y'":"value='n'")?> checked
+                     id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    <?php echo $category?>
+                </label>
+            </div>
+            <?php endforeach;?>
+            <?php foreach($not_transaction_categories as $key=>$category): ?>
+            <div class="form-check">
+                <input class="form-check-input" name="<?php echo $category?>" type="checkbox"
+                    <?php echo (isset($_POST[$category])?"value='y'":"value='n'")?>
+                     id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    <?php echo $category?>
+                </label>
+            </div>
+            <?php endforeach;?>
         </label>
         <button type="submit" class="block w-full py-2 bg-indigo-600 text-white rounded">
             Submit

@@ -34,7 +34,7 @@
             </div>
             <?php endif; ?>
         </label>
-        <!-- Caterories -->
+        <!-- Categories -->
         <label class="block">
             <span class="text-gray-700">Categories</span>
             <?php foreach($categories as $category): ?>
