@@ -6,10 +6,10 @@ namespace App\Controllers;
 
 use Framework\TemplateEngine;
 use App\Config\Paths;
-use App\Services\{TransactionService};
+use App\Services\{TransactionService, CategoryService};
 class HomeController
 {
-    public function __construct(private TemplateEngine $view, private TransactionService $transactionService)
+    public function __construct(private TemplateEngine $view, private TransactionService $transactionService, private CategoryService $categoryService)
     {
     }
     public function home()
@@ -30,8 +30,6 @@ class HomeController
         );        
         
         $lastPage = ceil($count / $length);
-
-        $categoryTerm = $_GET['c'] ?? null;
         
         //create an array of 1,2,... lastPage
         $pages = $lastPage ? range(1, $lastPage) : [];
@@ -55,7 +53,6 @@ class HomeController
             ]),
             'pageLinks' => $pageLinks,
             'searchTerm' => $searchTerm,
-            'category_term' => $categoryTerm
         ]);
     }
 }

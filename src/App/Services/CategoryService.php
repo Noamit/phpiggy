@@ -33,6 +33,7 @@ class CategoryService {
         $data = [
             'category_name' => $category_name
         ];
+        
         return $this->db->query($sql, $data)->find();
     }
 
@@ -41,6 +42,8 @@ class CategoryService {
         $data = [
             'transaction_id' => $transaction_id
         ];
+
+
         return $this->db->query($sql, $data)->findAll();
     }
 
@@ -52,6 +55,50 @@ class CategoryService {
         ];
 
         $this->db->query($sql, $data);
+    }
+
+    public function getTransactionsCategory(int $length, int $offset) {
+
+        $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+        $category_name = $_GET['c'] ?? '';
+        $category_name = $_GET['c'] === 'all' ? '' : $_GET['c'];
+        $sql = "SELECT *, DATE_FORMAT(date, '%Y-%m-%d') AS formatted_date
+        FROM transactions, transactions_categories
+        WHERE transactions.id = transactions_categories.transaction_id
+        AND category_name LIKE :category_name
+        AND description LIKE :description
+        LIMIT {$length} OFFSET {$offset}";
+        
+        $params = [
+            'category_name' => "%{$category_name}%",
+            'description' => "%{$searchTerm}%"
+        ];
+
+        $transactions = $this->db->query($sql, $params)->findAll();
+
+        $transactions = array_map(function(array $transaction) {
+            $sql = "SELECT * FROM receipts WHERE transaction_id = :transaction_id";
+            $data = ['transaction_id' => $transaction['id']];
+            
+            $transaction['receipts'] = $this->db->query($sql, $data)->findAll();
+            return $transaction;
+        } , $transactions);
+        
+        $transactions = array_map(function(array $transaction) {
+            $sql = "SELECT * FROM transactions_categories WHERE transaction_id = :transaction_id";
+            $data = ['transaction_id' => $transaction['id']];
+            
+            $transaction['categories'] = $this->db->query($sql, $data)->findAll();
+            return $transaction;
+        } , $transactions);
+        
+        $sql = "SELECT COUNT(*) FROM transactions, transactions_categories
+        WHERE transactions.id = transactions_categories.transaction_id
+        AND category_name LIKE :category_name
+        AND description LIKE :description";
+
+        $transactionCount = $this->db->query($sql, $params)->count();
+        return [$transactions, $transactionCount];
     }
 
     public function deleteTransactionFromCategory(string $category_name, string $transaction_id) {
