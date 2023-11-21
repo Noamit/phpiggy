@@ -20,19 +20,20 @@ class AdvancedSearchController
         $page = $_GET['p'] ?? 1;
         $page = (int) $page;
         
-                // //number of result we want in a page
+        // //number of result we want in a page
         $length = 3;
         $offset = ($page - 1) * $length;
         
-                //$searchTerm null -> previousPageQuery will ignore it at http_build_query
+        //$searchTerm null -> previousPageQuery will ignore it at http_build_query
         $searchTerm = $_GET['s'] ?? null;
         $categoryTerm = $_GET['c'] ?? null;
+        $fromTerm = $_GET['from'] ?? null;
+        $toTerm = $_GET['to'] ?? null;
         
         [$transactions, $count] = $this->categoryService->getTransactionsCategory(
             $length, $offset
         );    
       
-                
         $lastPage = ceil($count / $length);
                 
         //create an array of 1,2,... lastPage
@@ -41,7 +42,9 @@ class AdvancedSearchController
             fn($pageNum) => http_build_query([
                 'p' => $pageNum,
                 's' => $searchTerm,
-                'c' => $categoryTerm
+                'c' => $categoryTerm,
+                'from' => $fromTerm,
+                'to' => $toTerm
         ]),$pages);
         
                 echo $this->view->render("advanced_search.php", [
@@ -50,13 +53,17 @@ class AdvancedSearchController
                     'previousPageQuery' => http_build_query([
                         'p' => $page - 1,
                         's' => $searchTerm,
-                        'c' => $categoryTerm
+                        'c' => $categoryTerm,
+                        'from' => $fromTerm,
+                        'to' => $toTerm
                     ]),
                     'lastPage' => $lastPage,
                     'nextPageQuery' => http_build_query([
                         'p' => $page + 1,
                         's' => $searchTerm,
-                        'c' => $categoryTerm
+                        'c' => $categoryTerm,
+                        'from' => $fromTerm,
+                        'to' => $toTerm
                     ]),
                     'pageLinks' => $pageLinks,
                     'searchTerm' => $searchTerm,

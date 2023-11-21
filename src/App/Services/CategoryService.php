@@ -62,19 +62,35 @@ class CategoryService {
         $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
         $category_name = $_GET['c'] ?? '';
         $category_name = $_GET['c'] === 'all' ? '' : $_GET['c'];
-        $sql = "SELECT *, DATE_FORMAT(date, '%Y-%m-%d') AS formatted_date
-        FROM transactions, transactions_categories
-        WHERE transactions.id = transactions_categories.transaction_id
-        AND category_name LIKE :category_name
-        AND description LIKE :description
-        LIMIT {$length} OFFSET {$offset}";
+        $fromTerm = $_GET['from'] ?? null;
+        $toTerm = $_GET['to'] ?? null;
+
+        $sql_select = "SELECT *, DATE_FORMAT(date, '%Y-%m-%d') AS formatted_date ";
+        $sql_count = "SELECT COUNT(*) ";
         
+        $sql = "FROM transactions
+        JOIN transactions_categories ON transactions.id = transactions_categories.transaction_id
+        WHERE category_name LIKE :category_name
+        AND description LIKE :description";
+
         $params = [
             'category_name' => "%{$category_name}%",
             'description' => "%{$searchTerm}%"
         ];
 
-        $transactions = $this->db->query($sql, $params)->findAll();
+        if ($fromTerm != null) {
+            $sql .= " AND DATE(date) >= :fromTerm ";
+            $params['fromTerm'] = $fromTerm;
+
+        } 
+        if ($toTerm != null) {
+            $sql .= " AND DATE(date) <= :toTerm ";
+            $params['toTerm'] = $toTerm;
+        }
+        
+        $sql_limit = " LIMIT {$length} OFFSET {$offset}";
+
+        $transactions = $this->db->query($sql_select . $sql . $sql_limit , $params)->findAll();
 
         $transactions = array_map(function(array $transaction) {
             $sql = "SELECT * FROM receipts WHERE transaction_id = :transaction_id";
@@ -92,12 +108,7 @@ class CategoryService {
             return $transaction;
         } , $transactions);
         
-        $sql = "SELECT COUNT(*) FROM transactions, transactions_categories
-        WHERE transactions.id = transactions_categories.transaction_id
-        AND category_name LIKE :category_name
-        AND description LIKE :description";
-
-        $transactionCount = $this->db->query($sql, $params)->count();
+        $transactionCount = $this->db->query($sql_count . $sql, $params)->count();
         return [$transactions, $transactionCount];
     }
 

@@ -15,18 +15,40 @@
                 <span class="text-gray-700">Category</span>
                 <select name="c"
                     class="w-full rounded-l-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <?php if ('all' === $categoryTerm || $categoryTerm === null) :?>
                     <option value="all" selected>All Categories</option>
+                    <?php else: ?>
+                    <option value="all">All Categories</option>
+                    <?php endif;?>
                     <?php foreach($categories as $category):?>
+                    <?php if ($category['category_name'] === $categoryTerm) :?>
+                    <option value="<?php echo $category['category_name'];?>" selected>
+                        <?php echo $category['category_name'];?>
+                        <?php else: ?>
                     <option value="<?php echo $category['category_name'];?>"><?php echo $category['category_name'];?>
+                        <?php endif;?>
                     </option>
                     <?php endforeach;?>
                 </select>
+            </label>
+            <br>
+            <label class="block">
+                <span class="text-gray-700">From</span>
+                <input name="from" type="date"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+            </label>
+            <br>
+            <label class="block">
+                <span class="text-gray-700">To</span>
+                <input name="to" type="date"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
             </label>
             <br>
             <button type="submit"
                 class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 Search
             </button>
+
         </form>
 
     </div>
