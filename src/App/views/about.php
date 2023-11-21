@@ -6,8 +6,6 @@
 
     <hr />
 
-    <!-- Escaping Data -->
-    <p>Escaping Data: </p>
 </section>
 <!-- End Main Content Area -->
 
