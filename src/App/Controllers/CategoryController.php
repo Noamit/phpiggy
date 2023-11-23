@@ -16,7 +16,22 @@ class CategoryController {
       {
         echo $this->view->render("categories/create.php");
       }
-    
+
+      public function chartView()
+      {
+        $categories = $this->categoryService->getCategories();
+
+        $categories = array_map(function(array $category) {
+          return $category['category_name'];
+        }, $categories);
+
+        $totals = array_map(function(String $category) {
+          return (($this->categoryService->getTotalAmout($category))['total']);
+        }, $categories);
+        
+        echo $this->view->render("categories/chart.php", ['categories' => $categories, 'totals' => $totals]);
+      }
+
       public function create() {
         $this->validatorService->validateCategory($_POST);
         $this->categoryService->create($_POST);

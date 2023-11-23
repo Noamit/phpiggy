@@ -124,4 +124,25 @@ class CategoryService {
         $this->db->query($sql, $data);
     }
     
+    public function getTotalAmout(string $category_name) {
+
+        
+        $sql = "SELECT transactions_categories.category_name as category_name, SUM(transactions.amount) as total
+                FROM transactions_categories 
+                JOIN transactions ON transactions.id = transactions_categories.transaction_id
+                WHERE category_name = :category_name
+                GROUP BY category_name";
+        $data = [
+            'category_name' => $category_name
+        ];
+        
+        $result = $this->db->query($sql, $data);
+
+        if ($result->count() == 0) {
+            return ['total' => 0];
+        }
+        else {
+            return $this->db->query($sql, $data)->find();
+        }
+    }
 }
