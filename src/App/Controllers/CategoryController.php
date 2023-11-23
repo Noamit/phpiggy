@@ -29,7 +29,7 @@ class CategoryController {
           return (($this->categoryService->getTotalAmout($category))['total']);
         }, $categories);
         
-        echo $this->view->render("categories/chart.php", ['categories' => $categories, 'totals' => $totals]);
+        echo $this->view->render("charts/category_chart.php", ['categories' => $categories, 'totals' => $totals]);
       }
 
       public function create() {
