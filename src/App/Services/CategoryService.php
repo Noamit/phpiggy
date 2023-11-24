@@ -13,45 +13,55 @@ class CategoryService {
     }
 
     public function create(array $formData) {
-        $sql = "INSERT INTO categories(category_name) VALUES(:category_name)";
+        $sql = "SELECT COUNT(*) FROM categories WHERE user_id = :user_id AND category_name = :category_name";
         $data = [
-            'category_name' => $formData['category_name']
+            'category_name' => $formData['category_name'],
+            'user_id' => $_SESSION['user']
         ];
+        // $result = $this->db->query($sql, $data);
+        $result = $this->db->query($sql, $data)->count();
 
-        $this->db->query($sql, $data);
+        if($result == 0) {
+            $sql = "INSERT INTO categories(category_name, user_id) VALUES(:category_name, :user_id)";
+            $this->db->query($sql, $data);
+        }
     }
 
 
     public function getCategories() {
-        $sql = "SELECT * FROM categories";
-                
-        return $this->db->query($sql)->findAll();
+        $sql = "SELECT * FROM categories WHERE user_id = :user_id";
+        $data = [
+            'user_id' => $_SESSION['user']
+        ];
+        return $this->db->query($sql, $data)->findAll();
     }
 
     public function getCategory(string $category_name) {
-        $sql = "SELECT * FROM categories WHERE category_name = :category_name";
+        $sql = "SELECT * FROM categories WHERE category_name = :category_name AND user_id = :user_id";
         $data = [
-            'category_name' => $category_name
+            'category_name' => $category_name,
+            'user_id' => $_SESSION['user']
         ];
         
         return $this->db->query($sql, $data)->find();
     }
 
     public function getTransactionCategories(string $transaction_id) {
-        $sql = "SELECT category_name FROM transactions_categories WHERE transaction_id = :transaction_id";
+        $sql = "SELECT category_name FROM transactions_categories WHERE transaction_id = :transaction_id AND user_id = :user_id";
         $data = [
-            'transaction_id' => $transaction_id
+            'transaction_id' => $transaction_id,
+            'user_id' => $_SESSION['user']
         ];
-
 
         return $this->db->query($sql, $data)->findAll();
     }
 
     public function addTransactionToCategory(string $category_name, string $transaction_id) {
-        $sql = "INSERT INTO transactions_categories(category_name, transaction_id) VALUES(:category_name, :transaction_id)";
+        $sql = "INSERT INTO transactions_categories(category_name, transaction_id, user_id) VALUES(:category_name, :transaction_id, :user_id)";
         $data = [
             'category_name' => $category_name,
-            'transaction_id' => $transaction_id
+            'transaction_id' => $transaction_id,
+            'user_id' => $_SESSION['user']
         ];
 
         $this->db->query($sql, $data);
@@ -71,11 +81,13 @@ class CategoryService {
         $sql = "FROM transactions
         JOIN transactions_categories ON transactions.id = transactions_categories.transaction_id
         WHERE category_name LIKE :category_name
+        AND transactions_categories.user_id = :user_id
         AND description LIKE :description";
 
         $params = [
             'category_name' => "%{$category_name}%",
-            'description' => "%{$searchTerm}%"
+            'description' => "%{$searchTerm}%",
+            'user_id' => $_SESSION['user']
         ];
 
         if ($fromTerm != null) {
@@ -115,10 +127,12 @@ class CategoryService {
     public function deleteTransactionFromCategory(string $category_name, string $transaction_id) {
         $sql = "DELETE FROM transactions_categories
                 WHERE transaction_id = :transaction_id 
+                AND 'user_id' = :user_id
                 AND category_name = :category_name";
         $data = [
             'category_name' => $category_name,
-            'transaction_id' => $transaction_id
+            'transaction_id' => $transaction_id,
+            'user_id' => $_SESSION['user']
         ];
 
         $this->db->query($sql, $data);
@@ -131,9 +145,11 @@ class CategoryService {
                 FROM transactions_categories 
                 JOIN transactions ON transactions.id = transactions_categories.transaction_id
                 WHERE category_name = :category_name
+                AND 'user_id' = :user_id
                 GROUP BY category_name";
         $data = [
-            'category_name' => $category_name
+            'category_name' => $category_name,
+            'user_id' => $_SESSION['user']
         ];
         
         $result = $this->db->query($sql, $data);
