@@ -32,6 +32,8 @@ function registerRoutes(App $app)
     $app->get('/transaction/{transaction}/receipt/{receipt}', [ReceiptController::class, 'download'])->add(AuthRequiredMiddleware::class);
     $app->delete('/transaction/{transaction}/receipt/{receipt}', [ReceiptController::class, 'delete'])->add(AuthRequiredMiddleware::class);
     $app->get('/advanced_search', [AdvancedSearchController::class, 'createView'])->add(AuthRequiredMiddleware::class);
+    $app->get('/activities', [HomeController::class, 'createActivitiesView'])->add(AuthRequiredMiddleware::class);
+
 
     $app->setErrorHandler([ErrorController::class, 'notFound']);
 

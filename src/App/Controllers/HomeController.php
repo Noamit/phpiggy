@@ -55,4 +55,8 @@ class HomeController
             'searchTerm' => $searchTerm,
         ]);
     }
+
+    public function createActivitiesView () {
+        echo $this->view->render("activities.php", []);
+    }
 }

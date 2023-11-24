@@ -34,6 +34,10 @@
                 </svg>
                 Advanced Search
             </a>
+            <a href="/activities"
+                class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
+                More Activities
+            </a>
         </div>
     </div>
 
