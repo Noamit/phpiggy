@@ -21,7 +21,8 @@ function registerRoutes(App $app)
     $app->get('/transaction', [TransactionController::class, 'createView'])->add(AuthRequiredMiddleware::class);
     $app->post('/transaction', [TransactionController::class, 'create'])->add(AuthRequiredMiddleware::class);
     $app->get('/category', [CategoryController::class, 'createView'])->add(AuthRequiredMiddleware::class);
-    $app->get('/category_chart', [CategoryController::class, 'chartView'])->add(AuthRequiredMiddleware::class);
+    $app->get('/category_chart', [CategoryController::class, 'categoryChartView'])->add(AuthRequiredMiddleware::class);
+    $app->get('/month_chart', [CategoryController::class, 'monthChartView'])->add(AuthRequiredMiddleware::class);
     $app->post('/category', [CategoryController::class, 'create'])->add(AuthRequiredMiddleware::class);
     $app->get('/transaction/{transaction}', [TransactionController::class, 'editView'])->add(AuthRequiredMiddleware::class);
     $app->post('/transaction/{transaction}', [TransactionController::class, 'edit'])->add(AuthRequiredMiddleware::class);

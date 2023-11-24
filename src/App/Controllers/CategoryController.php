@@ -17,7 +17,8 @@ class CategoryController {
         echo $this->view->render("categories/create.php");
       }
 
-      public function chartView()
+      //need to change the location(after creation) to Chart controller
+      public function categoryChartView()
       {
         $categories = $this->categoryService->getCategories();
 
@@ -26,10 +27,22 @@ class CategoryController {
         }, $categories);
 
         $totals = array_map(function(String $category) {
-          return (($this->categoryService->getTotalAmout($category))['total']);
+          return (($this->categoryService->getTotalAmoutByCategory($category))['total']);
         }, $categories);
         
         echo $this->view->render("charts/category_chart.php", ['categories' => $categories, 'totals' => $totals]);
+      }
+
+      //need to change the location(after creation) to Chart controller
+      public function monthChartView()
+      {
+        $months = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+
+        $totals = array_map(function(String $month) {
+          return (($this->categoryService->getTotalAmoutByMonth($month))['total']);
+        }, $months);
+        
+        echo $this->view->render("charts/month_chart.php", ['totals' => $totals]);
       }
 
       public function create() {
