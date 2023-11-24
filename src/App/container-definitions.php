@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Framework\{TemplateEngine, Database, Container};
 use App\Config\Paths;
-use App\Services\{ValidatorService, UserService, TransactionService, ReceiptService, CategoryService};
+use App\Services\{ValidatorService, UserService, TransactionService, ReceiptService, CategoryService, ChartService};
 
 return [
     // new TemplateEngine(Paths::VIEWS) is the return value of the function
@@ -32,5 +32,9 @@ return [
     CategoryService::class => function (Container $container) {
         $db = $container->get(Database::class);
         return new CategoryService($db);
+    },
+    ChartService::class => function (Container $container) {
+        $db = $container->get(Database::class);
+        return new ChartService($db);
     }           
 ];
