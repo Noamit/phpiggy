@@ -72,10 +72,12 @@ class CategoryService {
         $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
         $category_name = $_GET['c'] ?? '';
         $category_name = $_GET['c'] === 'all' ? '' : $_GET['c'];
+
+
         $fromTerm = $_GET['from'] ?? null;
         $toTerm = $_GET['to'] ?? null;
 
-        $sql_select = "SELECT *, DATE_FORMAT(date, '%Y-%m-%d') AS formatted_date ";
+        $sql_select = "SELECT *, transactions.id AS id, DATE_FORMAT(date, '%Y-%m-%d') AS formatted_date ";
         $sql_count = "SELECT COUNT(*) ";
         
         $sql = "FROM transactions
@@ -89,6 +91,19 @@ class CategoryService {
             'description' => "%{$searchTerm}%",
             'user_id' => $_SESSION['user']
         ];
+        
+        if($category_name == '') {
+            
+            $sql = "FROM transactions
+                    WHERE user_id = :user_id 
+                    AND description LIKE :description";
+             $params = [
+            'description' => "%{$searchTerm}%",
+            'user_id' => $_SESSION['user']
+        ];
+    
+        }
+
 
         if ($fromTerm != null) {
             $sql .= " AND DATE(date) >= :fromTerm ";
@@ -138,51 +153,5 @@ class CategoryService {
         $this->db->query($sql, $data);
     }
     
-    // //need to change the location(after creation) to Chart service
-    // public function getTotalAmoutByCategory(string $category_name) {
-
-    //     $sql = "SELECT transactions_categories.category_name as category_name, SUM(transactions.amount) as total
-    //             FROM transactions_categories 
-    //             JOIN transactions ON transactions.id = transactions_categories.transaction_id
-    //             WHERE category_name = :category_name
-    //             AND transactions_categories.user_id = :user_id
-    //             GROUP BY category_name";
-    //     $data = [
-    //         'category_name' => $category_name,
-    //         'user_id' => $_SESSION['user']
-    //     ];
-        
-    //     $result = $this->db->query($sql, $data);
-
-    //     if ($result->count() == 0) {
-    //         return ['total' => 0];
-    //     }
-    //     else {
-    //         return $this->db->query($sql, $data)->find();
-    //     }
-    // }
-
-    // //need to change the location(after creation) to Chart service
-    // public function getTotalAmoutByMonth(string $month) {
-    //     $year = date("Y");
-    //     $sql = "SELECT SUM(transactions.amount) as total FROM transactions 
-    //             WHERE transactions.user_id = :user_id 
-    //             AND MONTH(date) = :month
-    //             AND YEAR(date) = :year
-    //             GROUP BY MONTH(date)";
-    //     $data = [
-    //         'user_id' => $_SESSION['user'],
-    //         'month' => $month,
-    //         'year' => $year
-    //     ];
-        
-    //     $result = $this->db->query($sql, $data);
-
-    //     if ($result->count() == 0) {
-    //         return ['total' => 0];
-    //     }
-    //     else {
-    //         return $this->db->query($sql, $data)->find();
-    //     }
-    // }
+   
 }

@@ -1,7 +1,6 @@
 <?php include $this->resolve("partials/_header.php"); ?>
 <section class="container mx-auto mt-12 p-4 bg-white shadow-md border border-gray-200 rounded">
     <div class="flex items-center justify-between border-b border-gray-200 pb-4">
-
         <form method="GET" class="w-full">
 
             <label class="block">
