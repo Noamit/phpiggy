@@ -1,30 +1,11 @@
 <?php include $this->resolve("partials/_header.php"); ?>
+
 <!-- Start Main Content Area -->
 <section class="container mx-auto mt-12 p-4 bg-white shadow-md border border-gray-200 rounded">
-
     <div class="flex items-center justify-between border-b border-gray-200 pb-4">
+
         <h4 class="font-medium">Transaction List</h4>
         <div class="flex space-x-4">
-            <a href="/transaction"
-                class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-
-                New Transaction
-            </a>
-            <a href="/category"
-                class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-
-                New Category
-            </a>
             <a href="/advanced_search"
                 class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-funnel"
@@ -34,10 +15,47 @@
                 </svg>
                 Advanced Search
             </a>
-            <a href="/activities"
-                class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
-                More Activities
-            </a>
+            <div class="btn-group" role="group">
+                <div class="btn-group" role="group">
+                    <button type="button"
+                        class="dropdown-toggle flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li> <a href="/transaction"
+                                class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
+                                New Transaction
+                            </a></li>
+                        <li><a href="/category"
+                                class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
+                                New Category
+                            </a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="btn-group" role="group">
+                <div class="btn-group" role="group">
+                    <button type="button"
+                        class="dropdown-toggle flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Charts
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/category_chart"
+                                class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">category_chart</a>
+                        </li>
+                        <li><a href="/month_chart"
+                                class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">month_chart</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 

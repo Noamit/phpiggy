@@ -26,6 +26,7 @@ body {
   margin: 0;
   line-height: inherit;
 }
+
 hr {
   height: 0;
   color: inherit;
@@ -1140,3 +1141,4 @@ hr {
     column-gap: 2.5rem;
   }
 }
+
