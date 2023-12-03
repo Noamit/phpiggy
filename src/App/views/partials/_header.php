@@ -23,7 +23,7 @@
 
 <body class="bg-indigo-50 font-['Outfit']">
     <div class="flex">
-        <aside class="w-1/4 bg-gray-800 text-white">
+        <aside class="w-1/4 bg-indigo-900 text-white">
             <!-- Sidebar content -->
             <ul class="py-4">
                 <li><a href="#" class="block px-4 py-2">Sidebar Item 1</a></li>
