@@ -2,4 +2,20 @@ a {
     text-decoration: none;
   }
 
-  
+/* Resetting margins and paddings */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Making sure all children of body fill the space */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensuring main content fills the remaining space */
+main {
+  flex: 1;
+}

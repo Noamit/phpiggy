@@ -3,6 +3,9 @@
     &copy; PHPiggy
 </footer>
 <!-- End Footer -->
+</main>
+</div>
 </body>
+
 
 </html>
