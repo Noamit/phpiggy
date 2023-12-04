@@ -23,14 +23,12 @@
 
 <body class="bg-indigo-50 font-['Outfit']">
     <div class="flex">
-        <aside class="w-1/4 bg-indigo-900 text-white">
-            <!-- Sidebar content -->
+        <!-- <aside class="w-1/4 bg-indigo-900 text-white">
             <ul class="py-4">
                 <li><a href="#" class="block px-4 py-2">Sidebar Item 1</a></li>
                 <li><a href="#" class="block px-4 py-2">Sidebar Item 2</a></li>
-                <!-- Add more sidebar items as needed -->
             </ul>
-        </aside>
+        </aside> -->
 
         <main class="w-3/4">
             <!-- Start Header -->
